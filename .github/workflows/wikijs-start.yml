@@ -25,10 +25,10 @@ jobs:
           INSTANCE_ID: ${{ secrets.WIKIJS_EC2_INSTANCE_ID }}
         run: |
           aws ec2 start-instances --instance-id $INSTANCE_ID
-        - name: Wait for ec2 instance state update
-          uses: jakejarvis/wait-action@master
-          with:
-            time: '5s'
+      - name: Wait for ec2 instance state update
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '5s'
       - name: Upsert route53 record
         env:
           INSTANCE_ID: ${{ secrets.WIKIJS_EC2_INSTANCE_ID }}
