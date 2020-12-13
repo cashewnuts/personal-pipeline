@@ -27,7 +27,7 @@ jobs:
             --query 'Reservations[0].Instances[0].PublicDnsName' \
             --output text \
             | read CNAME_VALUE
-          sed "s/#CNAME_VALUE/$CNAME_VALUE/g" .github/base-files/wiki/route53-change-record.json > route53-change-record.json
+          sed "s/#CNAME_VALUE/$CNAME_VALUE/g" base-files/wiki/route53-change-record.json > route53-change-record.json
           aws route53 change-resource-record-sets \
             --hosted-zone-id $HOSTED_ZONE_ID \
             --change-batch file://route53-change-record.json
