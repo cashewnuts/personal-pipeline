@@ -1,5 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-name: wikijs
+name: wikijs-start-db
 
 # Controls when the action will run. 
 on:
@@ -22,16 +22,3 @@ jobs:
           WIKIJS_DB_ARN: ${{ secrets.WIKIJS_DB_ARN }}
         run: |
           aws rds start-db-cluster --db-cluster-identifier $WIKIJS_DB_ARN
-  stop-db-instance:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.WIKIJS_AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.WIKIJS_AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
-      - name: run-commands
-        env:
-          WIKIJS_DB_ARN: ${{ secrets.WIKIJS_DB_ARN }}
-        run: |
-          aws rds stop-db-cluster --db-cluster-identifier $WIKIJS_DB_ARN
