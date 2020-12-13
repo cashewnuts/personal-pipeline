@@ -9,7 +9,7 @@
         "TTL": 300,
         "ResourceRecords": [
           {
-            "Value": "$CNAME_VALUE"
+            "Value": "#CNAME_VALUE"
           },
         ]
       }
