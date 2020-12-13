@@ -1,0 +1,18 @@
+{
+  "Comment": "optional comment about the changes in this change batch request",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "wiki.tkanemoto.net",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "$CNAME_VALUE"
+          },
+        ]
+      }
+    },
+  ]
+}
