@@ -20,12 +20,20 @@ jobs:
           aws-access-key-id: ${{ secrets.WIKIJS_AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.WIKIJS_AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
-      - name: run-commands
+      - name: Start ec2 instance
+        env:
+          INSTANCE_ID: ${{ secrets.WIKIJS_EC2_INSTANCE_ID }}
+        run: |
+          aws ec2 start-instances --instance-id $INSTANCE_ID
+        - name: Wait for ec2 instance state update
+          uses: jakejarvis/wait-action@master
+          with:
+            time: '5s'
+      - name: Upsert route53 record
         env:
           INSTANCE_ID: ${{ secrets.WIKIJS_EC2_INSTANCE_ID }}
           HOSTED_ZONE_ID: ${{ secrets.WIKIJS_HOSTED_ZONE_ID }}
         run: |
-          aws ec2 start-instances --instance-id $INSTANCE_ID
           AWS_PAGER= aws ec2 describe-instances --instance-id $INSTANCE_ID \
             --query 'Reservations[0].Instances[0].PublicDnsName' \
             --output text \
