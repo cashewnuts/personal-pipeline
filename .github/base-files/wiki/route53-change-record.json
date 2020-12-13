@@ -10,9 +10,9 @@
         "ResourceRecords": [
           {
             "Value": "#CNAME_VALUE"
-          },
+          }
         ]
       }
-    },
+    }
   ]
 }
