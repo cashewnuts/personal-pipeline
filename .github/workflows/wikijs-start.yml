@@ -26,22 +26,15 @@ jobs:
         run: |
           aws ec2 start-instances --instance-id $INSTANCE_ID
       - name: Wait for ec2 instance state update
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '5s'
+        run: sleep 5
       - name: Upsert route53 record
         env:
           INSTANCE_ID: ${{ secrets.WIKIJS_EC2_INSTANCE_ID }}
           HOSTED_ZONE_ID: ${{ secrets.WIKIJS_HOSTED_ZONE_ID }}
         run: |
-          AWS_PAGER= aws ec2 describe-instances --instance-id $INSTANCE_ID \
-            --query 'Reservations[0].Instances[0].PublicDnsName' \
-            --output text \
-            | read CNAME_VALUE
+          AWS_PAGER='' aws ec2 describe-instances --instance-id $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicDnsName' --output text | read CNAME_VALUE
           echo $CNAME_VALUE
           cat base-files/wiki/route53-change-record.json
           sed "s/#CNAME_VALUE/$CNAME_VALUE/g" base-files/wiki/route53-change-record.json > route53-change-record.json
           cat route53-change-record.json
-          aws route53 change-resource-record-sets \
-            --hosted-zone-id $HOSTED_ZONE_ID \
-            --change-batch file://route53-change-record.json
+          aws route53 change-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID --change-batch file://route53-change-record.json
