@@ -17,7 +17,7 @@ jobs:
           aws-access-key-id: ${{ secrets.WIKIJS_AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.WIKIJS_AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
-      - name: Start ec2 instance
+      - name: Stop ec2 instance
         env:
           INSTANCE_ID: ${{ secrets.WIKIJS_EC2_INSTANCE_ID }}
         run: |
