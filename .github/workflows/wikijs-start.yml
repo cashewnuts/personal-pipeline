@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  start-db-instance:
+  start-instance:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,7 +38,10 @@ jobs:
             --query 'Reservations[0].Instances[0].PublicDnsName' \
             --output text \
             | read CNAME_VALUE
+          echo $CNAME_VALUE
+          cat base-files/wiki/route53-change-record.json
           sed "s/#CNAME_VALUE/$CNAME_VALUE/g" base-files/wiki/route53-change-record.json > route53-change-record.json
+          cat route53-change-record.json
           aws route53 change-resource-record-sets \
             --hosted-zone-id $HOSTED_ZONE_ID \
             --change-batch file://route53-change-record.json
