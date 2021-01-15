@@ -4,7 +4,7 @@
     {
       "Action": "UPSERT",
       "ResourceRecordSet": {
-        "Name": "wiki2.tkanemoto.net",
+        "Name": "wiki.tkanemoto.net",
         "Type": "CNAME",
         "TTL": 300,
         "ResourceRecords": [
