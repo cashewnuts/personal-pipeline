@@ -6,7 +6,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-    - cron: '15 16 * * *'  # every day at 1:15am JST
+    - cron: '15 12 * * *'  # every day at 9:15pm JST
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
